@@ -1,0 +1,42 @@
+# ---------------------------------------------------------------------------
+# Install PyTorch FIRST with the CUDA 12.4 wheels (see README), e.g.:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+# Then install this file:
+#   pip install -r backend/requirements.txt
+#
+# torch / torchvision are listed (unpinned) so this file is self-describing;
+# if you already installed the CUDA build above, pip will keep it and NOT
+# downgrade to the CPU wheel.
+# ---------------------------------------------------------------------------
+torch
+torchvision
+
+# Diffusion / model stack
+diffusers>=0.30.0
+transformers>=4.44.0
+accelerate>=0.33.0
+safetensors>=0.4.0
+huggingface-hub>=0.24.0
+controlnet-aux>=0.0.9
+
+# Background removal. We run rembg on CPU (fast for one image) and use the CPU
+# onnxruntime build - this avoids the onnxruntime-gpu CUDA DLL dependency issues
+# on Windows (e.g. missing cublasLt64_13.dll). The heavy diffusion still runs on
+# the GPU via PyTorch. To use GPU for rembg, install onnxruntime-gpu with a
+# matching CUDA runtime and set REMBG_USE_GPU=true.
+rembg>=2.0.59
+onnxruntime>=1.17.0
+
+# Super-resolution / upscaling (modern, basicsr-free loader)
+spandrel>=0.3.4
+
+# Imaging / numerics. Pin numpy <2 to avoid "compiled against numpy 1.x"
+# breakage with onnxruntime / opencv / older wheels in this stack.
+pillow>=10.0.0
+numpy>=1.26.0,<2.0.0
+
+# Web API
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.0
+python-multipart>=0.0.9
+requests>=2.31.0

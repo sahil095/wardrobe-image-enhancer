@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Model weights & caches
+models/
+*.safetensors
+*.ckpt
+*.pth
+*.onnx
+.cache/
+huggingface/
+
+# App outputs
+outputs/
+uploads/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Env
+.env

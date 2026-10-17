@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wardrobe Image Enhancer</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Wardrobe Image Enhancer</h1>
+    <span id="health" class="health">checking GPU…</span>
+  </header>
+
+  <main class="layout">
+    <!-- Controls -->
+    <section class="panel controls">
+      <h2>1. Upload garment</h2>
+      <label id="drop" class="dropzone" for="file">
+        <input type="file" id="file" accept="image/*" hidden />
+        <span id="dropText">Click or drag an image here<br /><small>jeans, shirt, pullover…</small></span>
+        <img id="thumb" alt="preview" hidden />
+      </label>
+
+      <h2>2. Tags <small>(optional, improves results)</small></h2>
+      <div class="grid2">
+        <label>Category<input id="category" placeholder="e.g. shirt" /></label>
+        <label>Color<input id="color" placeholder="e.g. navy blue" /></label>
+        <label>Pattern<input id="pattern" placeholder="e.g. striped" /></label>
+        <label>Notes<input id="notes" placeholder="e.g. cotton, long sleeve" /></label>
+      </div>
+
+      <details class="advanced">
+        <summary>Advanced settings</summary>
+        <label>Strength <span class="val" id="strengthVal">0.6</span>
+          <input type="range" id="strength" min="0.1" max="0.95" step="0.05" value="0.6" />
+          <small>Low = keep garment exact · High = more of a fresh product shot</small>
+        </label>
+        <label>Steps <span class="val" id="stepsVal">30</span>
+          <input type="range" id="steps" min="12" max="50" step="1" value="30" />
+        </label>
+        <label>Guidance <span class="val" id="guidanceVal">7</span>
+          <input type="range" id="guidance" min="1" max="12" step="0.5" value="7" />
+        </label>
+        <label>ControlNet (shape lock) <span class="val" id="cnVal">0.4</span>
+          <input type="range" id="controlnet_scale" min="0" max="1.2" step="0.05" value="0.4" />
+          <small>Lower = allow straightening · Higher = copy original shape</small>
+        </label>
+        <label>IP-Adapter (keep same item) <span class="val" id="ipVal">0.8</span>
+          <input type="range" id="ip_scale" min="0" max="1.2" step="0.05" value="0.8" />
+        </label>
+      </details>
+
+      <button id="enhanceBtn" class="primary">Enhance</button>
+      <button id="rerunBtn" class="secondary" disabled>Rerun (new seed)</button>
+      <p id="status" class="status"></p>
+    </section>
+
+    <!-- Results -->
+    <section class="panel results">
+      <h2>Comparison</h2>
+      <div class="compare">
+        <figure>
+          <figcaption>Original</figcaption>
+          <div class="imgbox"><img id="originalImg" alt="original" /></div>
+        </figure>
+        <figure>
+          <figcaption>Enhanced</figcaption>
+          <div class="imgbox">
+            <img id="resultImg" alt="result" />
+            <div id="spinner" class="spinner" hidden></div>
+          </div>
+          <a id="downloadLink" class="download" download hidden>Download enhanced</a>
+        </figure>
+      </div>
+      <p id="meta" class="meta"></p>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

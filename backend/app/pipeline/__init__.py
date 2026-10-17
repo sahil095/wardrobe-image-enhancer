@@ -1,0 +1,1 @@
+"""Image enhancement pipeline stages."""
